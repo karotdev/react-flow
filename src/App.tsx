@@ -22,12 +22,13 @@ const FlowDragAndDrop = () => {
     handleConnect,
     handleDragOver,
     handleDrop,
+    handleEdgeClick,
     handleRemoveNode,
   } = actions;
 
   const { values: formValues, actions: formActions } = useFlowForm();
   const { selectedNodeId } = formValues;
-  const { handleNodeClick, handlePaneClick } = formActions;
+  const { handleNodeClick, handlePaneClick, handleChange } = formActions;
 
   return (
     <div className="grid grid-cols-[280px_1fr_360px]">
@@ -43,6 +44,7 @@ const FlowDragAndDrop = () => {
           onDragOver={handleDragOver}
           onDrop={handleDrop}
           onNodeClick={handleNodeClick}
+          onEdgeClick={handleEdgeClick}
           onPaneClick={handlePaneClick}
         >
           <Background />
@@ -52,6 +54,7 @@ const FlowDragAndDrop = () => {
       <ElementsForm
         isOpen={nodes.some((node) => node.id === selectedNodeId)}
         values={nodes.find((node) => node.id === selectedNodeId)}
+        onChange={handleChange}
         onRemove={handleRemoveNode}
       />
     </div>

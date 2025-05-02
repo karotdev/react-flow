@@ -63,6 +63,10 @@ const useFlowDragAndDrop = ({ screenToFlowPosition }: Args) => {
     setNodes((nds) => [...nds, newNode]);
   }, []);
 
+  const handleEdgeClick = useCallback((_: unknown, edge: Edge) => {
+    setEdges((eds) => eds.filter((ed) => ed.id !== edge.id));
+  }, []);
+
   const handleRemoveNode = useCallback((nodeId: string) => {
     setNodes((nds) => nds.filter((nd) => nd.id !== nodeId));
     setEdges((eds) =>
@@ -85,6 +89,7 @@ const useFlowDragAndDrop = ({ screenToFlowPosition }: Args) => {
     handleConnect,
     handleDragOver,
     handleDrop,
+    handleEdgeClick,
     handleRemoveNode,
   };
 

@@ -1,34 +1,18 @@
-import { useReactFlow } from "@xyflow/react";
 import type { Node } from "@xyflow/react";
 import type { NodeData } from "../../types";
-import { memo, useCallback } from "react";
+import { memo } from "react";
 import type { ChangeEvent } from "react";
 
 interface Props {
   isOpen: boolean;
   values: Node | undefined;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onRemove: (nodeId: string) => void;
 }
 
-const ElementsForm = ({ isOpen, values, onRemove }: Props) => {
+const ElementsForm = ({ isOpen, values, onChange, onRemove }: Props) => {
   const { id, type, data } = values || {};
   const { label, description } = (data?.value || {}) as NodeData;
-
-  const { updateNodeData } = useReactFlow();
-
-  const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const { name, value } = e.target;
-
-      updateNodeData(id || "", {
-        value: {
-          ...(data?.value || {}),
-          [name]: value,
-        },
-      });
-    },
-    [updateNodeData, id, data?.value]
-  );
 
   return (
     <aside key={id} className="px-4 py-6 shadow-lg flex bg-stone-50">
@@ -49,7 +33,7 @@ const ElementsForm = ({ isOpen, values, onRemove }: Props) => {
                   name="label"
                   type="text"
                   defaultValue={label}
-                  onChange={handleChange}
+                  onChange={onChange}
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -61,7 +45,7 @@ const ElementsForm = ({ isOpen, values, onRemove }: Props) => {
                   name="description"
                   type="text"
                   defaultValue={description}
-                  onChange={handleChange}
+                  onChange={onChange}
                 />
               </div>
             </div>
