@@ -65,7 +65,9 @@ const useFlowDragAndDrop = ({ screenToFlowPosition }: Args) => {
 
   const handleRemoveNode = useCallback((nodeId: string) => {
     setNodes((nds) => nds.filter((nd) => nd.id !== nodeId));
-    setEdges((eds) => eds.filter((ed) => ed.source !== nodeId));
+    setEdges((eds) =>
+      eds.filter((ed) => ed.source !== nodeId && ed.target !== nodeId)
+    );
   }, []);
 
   const values = {
